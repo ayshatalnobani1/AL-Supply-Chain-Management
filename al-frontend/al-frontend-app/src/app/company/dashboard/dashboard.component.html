@@ -1,0 +1,34 @@
+<div class="dashboard-container">
+  <h2>Welcome back, AL Company!</h2>
+  <p *ngIf="loading">Loading dashboard data...</p>
+  <p *ngIf="errorMessage">{{ errorMessage }}</p>
+  <p>Here’s your current overview:</p>
+
+  <div class="stats-cards">
+    <div class="card">
+      <h3>Total Orders</h3>
+      <p>{{ loading ? '--' : (totalOrders ?? 'Unavailable') }}</p>
+    </div>
+    <div class="card">
+      <h3>Products in Stock</h3>
+      <p>{{ loading ? '--' : (productsInStock ?? 'Unavailable') }}</p>
+    </div>
+    <div class="card">
+      <h3>Suppliers</h3>
+      <p>{{ loading ? '--' : (supplierCount ?? 'Unavailable') }}</p>
+    </div>
+    <div class="card">
+      <h3>Low Stock Alerts</h3>
+      <p>Unavailable</p>
+    </div>
+  </div>
+
+  <div class="recent-activity">
+    <h3>Recent Activity</h3>
+    <ul *ngIf="!loading && recentActivity.length; else noActivity">
+      <li *ngFor="let activity of recentActivity">{{ activity.text }} — {{ activity.date | date:'mediumDate' }}</li>
+    </ul>
+    <ng-template #noActivity><p>{{ loading ? 'Loading activity...' : 'No dated activity is available.' }}</p></ng-template>
+  </div>
+</div>
+

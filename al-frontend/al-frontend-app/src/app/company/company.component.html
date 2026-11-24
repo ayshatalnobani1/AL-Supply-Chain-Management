@@ -1,0 +1,33 @@
+<div class="company-container">
+  <!-- Top Header with company name and logout -->
+  <div class="company-header">
+    <div>
+      @if (authService.user(); as user) {
+        <h2>{{ user.companyName || 'No company assigned' }}</h2>
+        <p>{{ user.fullName?.trim() || user.username }} · {{ user.roleName || 'Role unavailable' }}</p>
+      } @else if (authService.status() === 'checking') {
+        <h2>Loading identity...</h2>
+      } @else if (authService.status() === 'unavailable') {
+        <h2>Identity temporarily unavailable</h2>
+      } @else {
+        <h2>Not signed in</h2>
+      }
+    </div>
+    <button (click)="logout()">Logout</button>
+  </div>
+
+  <!-- Navbar below the header -->
+  <nav class="company-navbar">
+    <a routerLink="/company/dashboard" routerLinkActive="active-link">Dashboard</a>
+    <a routerLink="/company/marketplace" routerLinkActive="active-link">Marketplace</a>
+    <a routerLink="/company/orders" routerLinkActive="active-link">Orders</a>
+    <a routerLink="/company/forms" routerLinkActive="active-link">Forms</a>
+    <a routerLink="/company/reports" routerLinkActive="active-link">Reports</a>
+    <a routerLink="/company/about" routerLinkActive="active-link">About</a>
+  </nav>
+
+  <!-- Main content -->
+  <div class="company-main">
+    <router-outlet></router-outlet>
+  </div>
+</div>

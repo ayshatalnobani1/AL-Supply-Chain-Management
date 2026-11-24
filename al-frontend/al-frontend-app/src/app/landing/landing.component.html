@@ -1,0 +1,130 @@
+<div class="landing">
+  <header class="site-header">
+    <nav class="nav-inner page-width" aria-label="Main navigation">
+      <a class="brand" href="#top" aria-label="AL home">
+        <span class="brand-mark">AL<span class="brand-dot">.</span></span>
+        <span class="brand-divider"></span>
+        <span class="brand-caption">SUPPLY CHAIN<br>WORKSPACE</span>
+      </a>
+      <div class="nav-links">
+        <a href="#features">Platform</a>
+        <a href="#workspaces">Workspaces</a>
+        <a href="#about">About</a>
+      </div>
+      <button class="nav-signin" type="button" (click)="goToLogin()">Sign in <span aria-hidden="true">↗</span></button>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-inner page-width">
+        <div class="hero-copy">
+          <div class="eyebrow hero-eyebrow"><span class="eyebrow-dot"></span> ONE CONNECTED WORKSPACE</div>
+          <h1>Your supply chain.<br><span>Connected.</span></h1>
+          <p class="hero-description">A centralized platform connecting manufacturers and suppliers, bringing procurement, inventory, production, and business analytics together.</p>
+          <div class="hero-actions">
+            <button class="button button-light" type="button" (click)="goToLogin()">Sign in to AL <span aria-hidden="true">↗</span></button>
+            <a class="hero-secondary" href="#features">Explore the platform <span aria-hidden="true">↓</span></a>
+          </div>
+          <div class="hero-note"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Built for connected business workflows</div>
+        </div>
+
+        <div class="preview-wrap" aria-label="Illustrative preview of the AL workspace">
+          <div class="preview-label"><span></span> PLATFORM PREVIEW</div>
+          <div class="preview-window" aria-hidden="true">
+            <div class="preview-sidebar">
+              <div class="preview-brand">AL<span>.</span></div>
+              <div class="preview-sidebar-label">WORKSPACE</div>
+              <div class="preview-nav active"><i class="fa-solid fa-table-columns"></i><span>Overview</span></div>
+              <div class="preview-nav"><i class="fa-solid fa-cubes-stacked"></i><span>Marketplace</span></div>
+              <div class="preview-nav"><i class="fa-solid fa-box-open"></i><span>Orders</span></div>
+              <div class="preview-nav"><i class="fa-solid fa-chart-simple"></i><span>Reports</span></div>
+              <div class="preview-sidebar-bottom"><span class="preview-avatar">AL</span><span>Workspace<br><small>Company portal</small></span></div>
+            </div>
+            <div class="preview-main">
+              <div class="preview-top"><span>Workspace <b>/</b> Overview</span><span class="preview-top-icon"><i class="fa-regular fa-bell"></i></span></div>
+              <div class="preview-heading"><div><small>YOUR WORKSPACE</small><h2>Overview</h2><p>A clearer view of your operations.</p></div><span class="preview-date"><i class="fa-regular fa-calendar"></i> Overview</span></div>
+              <div class="preview-stats">
+                <div><i class="fa-solid fa-boxes-stacked"></i><small>Products</small><span class="skeleton short"></span></div>
+                <div><i class="fa-solid fa-arrow-right-arrow-left"></i><small>Orders</small><span class="skeleton short"></span></div>
+                <div><i class="fa-solid fa-warehouse"></i><small>Inventory</small><span class="skeleton short"></span></div>
+              </div>
+              <div class="preview-content">
+                <div class="preview-chart">
+                  <div class="preview-panel-header"><div><strong>Activity overview</strong><small>REPORTING WORKSPACE</small></div><i class="fa-solid fa-ellipsis"></i></div>
+                  <div class="chart-grid"><span class="bar bar-1"></span><span class="bar bar-2"></span><span class="bar bar-3"></span><span class="bar bar-4"></span><span class="bar bar-5"></span><span class="bar bar-6"></span><span class="bar bar-7"></span></div>
+                  <div class="chart-caption"><span>ACTIVITY</span><span>OVERVIEW</span></div>
+                </div>
+                <div class="preview-list">
+                  <div class="preview-panel-header"><div><strong>Recent activity</strong><small>WORKSPACE UPDATES</small></div></div>
+                  <div class="preview-list-row"><span class="list-icon"><i class="fa-solid fa-box"></i></span><span><b>Products</b><small>Catalog updates</small></span></div>
+                  <div class="preview-list-row"><span class="list-icon mint"><i class="fa-solid fa-warehouse"></i></span><span><b>Inventory</b><small>Stock movement</small></span></div>
+                  <div class="preview-list-row"><span class="list-icon gold"><i class="fa-solid fa-chart-line"></i></span><span><b>Reports</b><small>Business insights</small></span></div>
+                </div>
+              </div>
+              <div class="preview-bottom"><span><i class="fa-solid fa-circle"></i> Connected workspace</span><span>AL PLATFORM</span></div>
+            </div>
+          </div>
+          <p class="preview-disclaimer">Illustrative interface preview. Availability depends on access and data.</p>
+        </div>
+      </div>
+      <div class="hero-bottom page-width"><span>DESIGNED FOR BETTER VISIBILITY</span><span>FROM CATALOG TO INSIGHT <i class="fa-solid fa-arrow-down" aria-hidden="true"></i></span></div>
+    </section>
+
+    <section class="intro page-width" id="about">
+      <div class="section-index"><span>01</span> THE BIG PICTURE</div>
+      <div class="intro-copy">
+        <p class="section-kicker">A MORE CONNECTED WAY TO WORK</p>
+        <h2>Bring the moving parts<br><em>into focus.</em></h2>
+        <p>From the product catalog to the reporting workspace, AL brings key supply chain information into one place—so teams can spend less time piecing things together.</p>
+      </div>
+      <div class="intro-aside"><i class="fa-solid fa-arrow-trend-up" aria-hidden="true"></i><p>Built around the people, products, and processes that keep business moving.</p></div>
+    </section>
+
+    <section class="features-section" id="features">
+      <div class="page-width">
+        <div class="section-heading">
+          <div><p class="section-kicker">THE PLATFORM</p><h2>Everything in its place.</h2></div>
+          <p>A practical workspace for exploring the essential pieces of a connected supply chain.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card"><div class="feature-icon"><i class="fa-solid fa-store" aria-hidden="true"></i></div><span class="feature-number">01</span><h3>Supplier Marketplace</h3><p>Explore the shared product catalog, search categories, and view available product images.</p><span class="feature-tag">SHARED CATALOG</span></article>
+          <article class="feature-card"><div class="feature-icon"><i class="fa-solid fa-box-open" aria-hidden="true"></i></div><span class="feature-number">02</span><h3>Order Management</h3><p>Review existing order records and statuses when operational access is authorized.</p><span class="feature-tag">READ-ONLY RECORDS</span></article>
+          <article class="feature-card"><div class="feature-icon"><i class="fa-solid fa-warehouse" aria-hidden="true"></i></div><span class="feature-number">03</span><h3>Warehouse &amp; Inventory</h3><p>Explore available warehouse and inventory movement data in the reporting workspace.</p><span class="feature-tag">OPERATIONAL VISIBILITY</span></article>
+          <article class="feature-card"><div class="feature-icon"><i class="fa-solid fa-gears" aria-hidden="true"></i></div><span class="feature-number">04</span><h3>Production Management</h3><p>View available production activity and recipe records where access is authorized.</p><span class="feature-tag">PRODUCTION DATA</span></article>
+          <article class="feature-card"><div class="feature-icon"><i class="fa-solid fa-chart-pie" aria-hidden="true"></i></div><span class="feature-number">05</span><h3>Reports &amp; Analytics</h3><p>Make sense of existing records with visual reports for orders, inventory, and payments.</p><span class="feature-tag">VISUAL REPORTING</span></article>
+          <article class="feature-card"><div class="feature-icon"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></div><span class="feature-number">06</span><h3>Role-Based Access</h3><p>Sign in to an organization workspace with access checks for supported data and roles.</p><span class="feature-tag">CONTROLLED ACCESS</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="workspace-section page-width" id="workspaces">
+      <div class="section-heading workspace-heading">
+        <div><p class="section-kicker">TWO SIDES. ONE PLATFORM.</p><h2>A workspace for<br>every perspective.</h2></div>
+        <p>Different teams see the information available to them, in a space designed for their work.</p>
+      </div>
+      <div class="workspace-grid">
+        <article class="workspace-card company-card">
+          <div class="workspace-card-top"><span>01 / COMPANY PORTAL</span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
+          <div class="workspace-card-body"><div class="workspace-icon"><i class="fa-solid fa-industry" aria-hidden="true"></i></div><h3>For manufacturing<br>companies.</h3><p>Explore the marketplace and review available operational records, dashboards, and reports from a central workspace.</p></div>
+          <div class="workspace-card-foot"><span>CATALOG</span><span>ORDERS</span><span>REPORTS</span></div>
+        </article>
+        <article class="workspace-card supplier-card">
+          <div class="workspace-card-top"><span>02 / SUPPLIER PORTAL</span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
+          <div class="workspace-card-body"><div class="workspace-icon"><i class="fa-solid fa-truck-ramp-box" aria-hidden="true"></i></div><h3>For suppliers.</h3><p>Discover products in the shared marketplace and explore catalog insights in a dedicated supplier workspace.</p></div>
+          <div class="workspace-card-foot"><span>MARKETPLACE</span><span>CATALOG INSIGHTS</span></div>
+        </article>
+      </div>
+      <p class="workspace-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> AL is a portfolio application. Some operational views are restricted to local development, and record changes are currently unavailable.</p>
+    </section>
+
+    <section class="closing">
+      <div class="page-width closing-inner">
+        <div><p class="section-kicker">READY TO EXPLORE?</p><h2>A clearer view starts here.</h2><p>Sign in to access your AL workspace.</p></div>
+        <button class="button button-light" type="button" (click)="goToLogin()">Sign in to AL <span aria-hidden="true">↗</span></button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="page-width footer-inner"><a class="footer-brand" href="#top">AL<span>.</span></a><p>A connected supply chain workspace.</p><span>PORTFOLIO PROJECT · LOCAL DEVELOPMENT</span></div></footer>
+</div>

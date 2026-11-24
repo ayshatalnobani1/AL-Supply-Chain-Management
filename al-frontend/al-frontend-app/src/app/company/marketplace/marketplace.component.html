@@ -1,0 +1,22 @@
+<div class="marketplace-container">
+  <div class="marketplace-header">
+    <h2>Marketplace</h2>
+    <input type="text" placeholder="Search products..." [(ngModel)]="searchTerm" />
+  </div>
+
+  <p *ngIf="loading" class="no-products">Loading products...</p>
+  <p *ngIf="errorMessage" class="no-products">{{ errorMessage }}</p>
+  <div *ngIf="!loading && !errorMessage && filteredProducts().length === 0" class="no-products">
+    <p>No products to display yet.</p>
+  </div>
+
+  <div class="product-grid" *ngIf="!loading && !errorMessage && filteredProducts().length > 0">
+    <div class="product-card" *ngFor="let product of filteredProducts()">
+      <img *ngIf="product.imageUrl" [src]="product.imageUrl" [alt]="product.name" (error)="product.imageUrl = undefined" />
+      <h3>{{ product.name }}</h3>
+      <p><strong>Category:</strong> {{ product.category }}</p>
+      <p><strong>Price:</strong> {{ product.price === null ? 'Not available' : ('$' + product.price) }}</p>
+      <button disabled title="Ordering is not available">Order</button>
+    </div>
+  </div>
+</div>

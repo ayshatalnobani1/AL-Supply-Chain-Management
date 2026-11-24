@@ -1,0 +1,25 @@
+<div class="dashboard-container">
+  <h2>Supplier Dashboard</h2>
+  <p>Marketplace figures are from the shared catalog, not supplier-specific records.</p>
+  @if (errorMessage) { <p role="alert">{{ errorMessage }}</p> }
+
+  <div class="dashboard-cards">
+    <div class="card">
+      <h3>Marketplace Products</h3>
+      <p>{{ loading ? 'Loading...' : (productCount ?? 'Unavailable') }}</p>
+    </div>
+    <div class="card">
+      <h3>Marketplace Categories</h3>
+      <p>{{ loading ? 'Loading...' : (categoryCount ?? 'Unavailable') }}</p>
+    </div>
+    <div class="card">
+      <h3>Supplier Orders</h3>
+      <p>Unavailable: supplier order ownership is not established.</p>
+    </div>
+    <div class="card">
+      <h3>Supplier Inventory</h3>
+      <p>Unavailable: supplier-specific stock cannot be verified.</p>
+    </div>
+  </div>
+</div>
+

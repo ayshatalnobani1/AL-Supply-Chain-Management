@@ -1,0 +1,30 @@
+<div class="forms-container">
+  <div class="form-sidebar">
+    <button type="button" (click)="show('products')" [class.active]="activeForm === 'products'">View Products</button>
+    <button type="button" (click)="show('warehouses')" [class.active]="activeForm === 'warehouses'">View Warehouses</button>
+    <button type="button" (click)="show('recipes')" [class.active]="activeForm === 'recipes'">View Production Recipes</button>
+    <button type="button" (click)="show('adjustments')" [class.active]="activeForm === 'adjustments'">View Stock Adjustments</button>
+  </div>
+
+  <div class="form-content">
+    @if (!activeForm) {
+      <h2>Company Resources</h2>
+      <p>Select a resource to view available data. Creating and editing records are currently unavailable.</p>
+    } @else {
+      <h2>{{ title }}</h2>
+      <p>{{ scope }}</p>
+      <p>{{ limitation }}</p>
+      @if (loading) { <p>Loading...</p> }
+      @else if (errorMessage) { <p role="alert">{{ errorMessage }}</p> }
+      @else if (!rows.length) { <p>No records are available.</p> }
+      @else {
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th *ngFor="let column of columns">{{ column }}</th></tr></thead>
+            <tbody><tr *ngFor="let row of rows"><td *ngFor="let cell of row">{{ cell ?? 'Not available' }}</td></tr></tbody>
+          </table>
+        </div>
+      }
+    }
+  </div>
+</div>

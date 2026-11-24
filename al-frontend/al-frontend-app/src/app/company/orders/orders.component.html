@@ -1,0 +1,40 @@
+<div class="orders-container">
+  <div class="orders-header">
+    <h2>Orders</h2>
+    <p>Global supplier-order data for local development. Company-specific filtering is not available yet.</p>
+  </div>
+
+  <p *ngIf="loading">Loading orders...</p>
+  <p *ngIf="errorMessage" class="no-orders-msg">{{ errorMessage }}</p>
+  <div *ngIf="!loading && !errorMessage && orders.length > 0; else noOrders">
+    <table class="orders-table">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Total</th>
+          <th>User ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <td>{{ order.orderId }}</td>
+          <td>{{ order.productName }}</td>
+          <td>{{ order.quantity }}</td>
+          <td>{{ order.orderDate ? (order.orderDate | date:'mediumDate') : 'Not available' }}</td>
+          <td>{{ order.status }}</td>
+          <td>{{ order.totalAmount === null ? 'Not available' : ('$' + order.totalAmount) }}</td>
+          <td>{{ order.userId ?? 'Not available' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #noOrders>
+    <p *ngIf="!loading && !errorMessage" class="no-orders-msg">No orders to display yet.</p>
+  </ng-template>
+</div>
+

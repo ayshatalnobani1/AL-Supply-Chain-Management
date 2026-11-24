@@ -1,0 +1,150 @@
+<div class="reports-container">
+  <h1>Reports</h1>
+
+  <div class="report-nav">
+    <button (click)="showReport('warehouses')">Warehouses Report</button>
+    <button (click)="showReport('supplierOrders')">Supplier Orders</button>
+    <button (click)="showReport('inventoryMovements')">Inventory Movements</button>
+    <button (click)="showReport('payments')">Payments</button>
+  </div>
+
+  <div *ngIf="selectedReport === 'warehouses'" class="report-section">
+  <h2>Warehouses Report</h2>
+  <p>Global warehouse data for local development.</p>
+  <p *ngIf="warehousesLoading">Loading warehouses...</p>
+  <p *ngIf="warehousesError">{{ warehousesError }}</p>
+  <div *ngIf="!warehousesLoading && !warehousesError && hasWarehouseCapacityChartData" class="warehouse-chart-container">
+    <canvas baseChart [data]="warehouseCapacityChartData" [options]="warehouseCapacityChartOptions" [type]="'bar'"></canvas>
+  </div>
+  <p *ngIf="!warehousesLoading && !warehousesError && warehouses.length && !hasWarehouseCapacityChartData">Warehouse capacity values are unavailable.</p>
+  <table *ngIf="!warehousesLoading && !warehousesError && warehouses.length">
+    <tr>
+      <th>ID</th>
+      <th>Location</th>
+      <th>Capacity</th>
+      <th>Manager</th>
+    </tr>
+    <tr *ngFor="let w of warehouses">
+      <td>{{w.warehouseId}}</td>
+      <td>{{w.warehouseLocation ?? 'Not available'}}</td>
+      <td>{{w.capacity === null ? 'Not available' : (w.capacity | number)}}</td>
+      <td>{{w.manager ?? 'Not available'}}</td>
+    </tr>
+  </table>
+  <p *ngIf="!warehousesLoading && !warehousesError && !warehouses.length">No warehouses are available.</p>
+</div>
+
+<!-- Supplier Orders -->
+<div *ngIf="selectedReport === 'supplierOrders'" class="report-section">
+  <h2>Supplier Orders Report</h2>
+  <p>Global order data for local development; supplier ownership is unavailable.</p>
+  <p *ngIf="supplierOrdersLoading">Loading supplier orders...</p>
+  <p *ngIf="supplierOrdersError">{{ supplierOrdersError }}</p>
+  <div *ngIf="!supplierOrdersLoading && !supplierOrdersError && (hasSupplierOrderStatusChartData || hasSupplierOrderTimelineChartData)" class="supplier-order-chart-grid">
+    <div *ngIf="hasSupplierOrderStatusChartData" class="supplier-order-chart-container">
+      <canvas baseChart [data]="supplierOrderStatusChartData" [options]="supplierOrderStatusChartOptions" [type]="'doughnut'"></canvas>
+    </div>
+    <div *ngIf="hasSupplierOrderTimelineChartData" class="supplier-order-chart-container">
+      <canvas baseChart [data]="supplierOrderTimelineChartData" [options]="supplierOrderTimelineChartOptions" [type]="'line'"></canvas>
+    </div>
+  </div>
+  <p *ngIf="!supplierOrdersLoading && !supplierOrdersError && supplierOrders.length && !hasSupplierOrderStatusChartData">Order-status data is unavailable.</p>
+  <p *ngIf="!supplierOrdersLoading && !supplierOrdersError && supplierOrders.length && !hasSupplierOrderTimelineChartData">No valid order dates are available for the timeline.</p>
+  <table *ngIf="!supplierOrdersLoading && !supplierOrdersError && supplierOrders.length">
+    <tr>
+      <th>Order ID</th>
+      <th>Product</th>
+      <th>Status</th>
+      <th>Quantity</th>
+      <th>Order Date</th>
+      <th>Total Amount</th>
+    </tr>
+    <tr *ngFor="let order of supplierOrders">
+      <td>{{ order.orderId }}</td>
+      <td>{{ order.product }}</td>
+      <td>{{ order.status }}</td>
+      <td>{{ order.quantity ?? 'Not available' }}</td>
+      <td>{{ order.orderDate ? (order.orderDate | date:'mediumDate') : 'Not available' }}</td>
+      <td>{{ order.totalAmount === null ? 'Not available' : (order.totalAmount | number:'1.2-2') }}</td>
+    </tr>
+  </table>
+  <p *ngIf="!supplierOrdersLoading && !supplierOrdersError && !supplierOrders.length">No supplier orders are available.</p>
+</div>
+
+<!-- Inventory Movements -->
+<div *ngIf="selectedReport === 'inventoryMovements'" class="report-section">
+  <h2>Inventory Movements Report</h2>
+  <p>Global inventory data for local development.</p>
+  <p *ngIf="inventoryLoading">Loading inventory movements...</p>
+  <p *ngIf="inventoryError">{{ inventoryError }}</p>
+  <div *ngIf="!inventoryLoading && !inventoryError && (hasInventoryQuantityChartData || hasInventoryHistoryChartData)" class="inventory-chart-grid">
+    <div *ngIf="hasInventoryQuantityChartData" class="inventory-chart-container">
+      <canvas baseChart [data]="inventoryQuantityChartData" [options]="inventoryQuantityChartOptions" [type]="'bar'"></canvas>
+    </div>
+    <div *ngIf="hasInventoryHistoryChartData" class="inventory-chart-container">
+      <canvas baseChart [data]="inventoryHistoryChartData" [options]="inventoryHistoryChartOptions" [type]="'line'"></canvas>
+    </div>
+  </div>
+  <p *ngIf="!inventoryLoading && !inventoryError && inventoryMovements.length && !hasInventoryQuantityChartData">No valid movement types and quantities are available.</p>
+  <p *ngIf="!inventoryLoading && !inventoryError && inventoryMovements.length && !hasInventoryHistoryChartData">No valid movement dates are available for the history chart.</p>
+  <table *ngIf="!inventoryLoading && !inventoryError && inventoryMovements.length">
+    <tr>
+      <th>Movement ID</th>
+      <th>Product</th>
+      <th>Warehouse</th>
+      <th>Type</th>
+      <th>Quantity</th>
+      <th>Date</th>
+      <th>Reason</th>
+      <th>Supplier Order ID</th>
+    </tr>
+    <tr *ngFor="let movement of inventoryMovements">
+      <td>{{ movement.movementId }}</td>
+      <td>{{ movement.product }}</td>
+      <td>{{ movement.warehouse }}</td>
+      <td>{{ movement.type ?? 'Unavailable' }}</td>
+      <td>{{ movement.quantity ?? 'Not available' }}</td>
+      <td>{{ movement.date ? (movement.date | date:'mediumDate') : 'Not available' }}</td>
+      <td>{{ movement.reason }}</td>
+      <td>{{ movement.supplierOrderId ?? 'Not available' }}</td>
+    </tr>
+  </table>
+  <p *ngIf="!inventoryLoading && !inventoryError && !inventoryMovements.length">No inventory movements are available.</p>
+</div>
+
+<!-- Payments -->
+<div *ngIf="selectedReport === 'payments'" class="report-section">
+  <h2>Payments Report</h2>
+  <p>Global payment records for local development; recorded amounts are not revenue.</p>
+  <p *ngIf="paymentsLoading">Loading payments...</p>
+  <p *ngIf="paymentsError">{{ paymentsError }}</p>
+  <div *ngIf="!paymentsLoading && !paymentsError && (hasPaymentAmountChartData || hasPaymentStatusChartData)" class="payments-chart-grid">
+    <div *ngIf="hasPaymentAmountChartData" class="payments-chart-container">
+      <canvas baseChart [data]="paymentAmountChartData" [options]="paymentAmountChartOptions" [type]="'bar'"></canvas>
+    </div>
+    <div *ngIf="hasPaymentStatusChartData" class="payments-chart-container">
+      <canvas baseChart [data]="paymentStatusChartData" [options]="paymentStatusChartOptions" [type]="'doughnut'"></canvas>
+    </div>
+  </div>
+  <p *ngIf="!paymentsLoading && !paymentsError && payments.length && !hasPaymentAmountChartData">No valid recorded payment amounts are available.</p>
+  <p *ngIf="!paymentsLoading && !paymentsError && payments.length && !hasPaymentStatusChartData">Payment-status data is unavailable.</p>
+  <table *ngIf="!paymentsLoading && !paymentsError && payments.length">
+    <tr>
+      <th>Payment ID</th>
+      <th>Order ID</th>
+      <th>Recorded Amount</th>
+      <th>Date</th>
+      <th>Method</th>
+      <th>Status</th>
+    </tr>
+    <tr *ngFor="let payment of payments">
+      <td>{{ payment.paymentId }}</td>
+      <td>{{ payment.supplierOrderId ?? 'Not available' }}</td>
+      <td>{{ payment.amount === null ? 'Not available' : (payment.amount | number:'1.2-2') }}</td>
+      <td>{{ payment.date ? (payment.date | date:'mediumDate') : 'Not available' }}</td>
+      <td>{{ payment.method ?? 'Unknown' }}</td>
+      <td>{{ payment.status ?? 'Unknown' }}</td>
+    </tr>
+  </table>
+  <p *ngIf="!paymentsLoading && !paymentsError && !payments.length">No payments are available.</p>
+</div>

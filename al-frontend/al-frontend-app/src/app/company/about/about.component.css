@@ -1,0 +1,42 @@
+/* Prevent all page-level scroll */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; /* 🔒 disables all scrolling */
+}
+
+/* Main container below a fixed-height header */
+.about-container {
+  height: calc(85vh - 130px);
+  background-color: #f4fbfa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* extra safety */
+  box-sizing: border-box;
+  color: #0a3b35;
+}
+
+/* Centered card design */
+.about-card {
+  background-color: #dceeee;
+  padding: 32px;
+  max-width: 600px;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(10, 59, 53, 0.1);
+  border: 2px solid #a4ccc7;
+  text-align: center;
+}
+
+.about-card h2 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 28px;
+}
+
+.about-card p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+}

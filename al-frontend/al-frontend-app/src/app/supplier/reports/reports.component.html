@@ -1,0 +1,10 @@
+<div class="supplier-reports">
+  <h2>Supplier Reports</h2>
+  <p>This chart summarizes the shared marketplace catalog, not products owned by your company.</p>
+  @if (loading) { <p>Loading marketplace report...</p> }
+  @else if (errorMessage) { <p role="alert">{{ errorMessage }}</p> }
+  @else if (hasData) {
+    <div class="chart-container"><canvas baseChart [data]="chartData" [options]="chartOptions" [type]="'bar'"></canvas></div>
+  } @else { <p>No marketplace products are available.</p> }
+  <p>Supplier-specific orders, inventory, payments and production reports are unavailable because ownership is not established.</p>
+</div>

@@ -1,0 +1,101 @@
+.reports-container {
+  padding: 2rem;
+  background-color: #dceeee; /* very light teal background */
+  font-family: Arial, sans-serif;
+}
+
+.report-nav {
+  margin-bottom: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.report-nav button {
+  background-color: #0a3b35; /* dark green */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.report-nav button:hover {
+  background-color: #0a3b35cc; /* slightly transparent dark green on hover */
+}
+
+.report-section {
+  background: white; /* keep white for contrast */
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(10, 59, 53, 0.2); /* subtle shadow with dark green tint */
+  margin-top: 1rem;
+}
+
+.warehouse-chart-container {
+  position: relative;
+  min-height: 320px;
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid #b4d8d6;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.warehouse-chart-container canvas {
+  max-height: 360px;
+}
+
+.supplier-order-chart-grid,
+.inventory-chart-grid,
+.payments-chart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.supplier-order-chart-container,
+.inventory-chart-container,
+.payments-chart-container {
+  position: relative;
+  min-height: 320px;
+  padding: 1rem;
+  border: 1px solid #b4d8d6;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.supplier-order-chart-container canvas,
+.inventory-chart-container canvas,
+.payments-chart-container canvas {
+  max-height: 360px;
+}
+
+.report-section table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.report-section th,
+.report-section td {
+  border: 1px solid #0a3b35; /* dark green borders */
+  padding: 0.8rem;
+  text-align: left;
+}
+
+.report-section th {
+  background-color: #b4d8d6; /* light teal header background */
+  color: #0a3b35; /* dark green text */
+}
+
+.report-section tr:nth-child(even) {
+  background-color: #dceeee; /* very light teal for even rows */
+}
+
+.report-section tr:hover {
+  background-color: #b4d8d6cc; /* transparent light teal on hover */
+  cursor: pointer;
+}
