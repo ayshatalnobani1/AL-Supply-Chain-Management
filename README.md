@@ -1,72 +1,61 @@
 # AL — Supply Chain Workspace
 
-AL is a full-stack B2B supply-chain portfolio prototype connecting company and supplier workspaces. It brings a shared product marketplace, operational records, and visual reporting into one application. The local demonstration uses fictional data and is not a production-ready multi-tenant system.
+![Angular](https://img.shields.io/badge/Angular-19-DD0031?logo=angular)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?logo=nodedotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express-5-000000?logo=express)
+![Oracle](https://img.shields.io/badge/Oracle%20Database-19c-F80000?logo=oracle)
+![Chart.js](https://img.shields.io/badge/Chart.js-FF6384?logo=chartdotjs&logoColor=white)
 
-## Features
+AL is a full-stack B2B supply-chain portfolio prototype that connects a shared product marketplace with company and supplier workspaces. It demonstrates Angular and TypeScript frontend development, Node.js and Express REST APIs, Oracle data integration, and authenticated, permission-aware access to operational information.
 
-- **Company portal:** dashboard statistics and recent activity, a searchable product marketplace, order records, and operational reports.
-- **Supplier portal:** a basic dashboard, shared marketplace, and catalog visualization. Supplier-specific operational ownership is not established.
-- **Read-only data views:** products, warehouses, production recipes, stock adjustments, and other records where access is authorized.
-- **Account access:** username login, session restoration, logout, organization-based portal navigation, and protected API routes.
-- **Reports:** tables and interactive charts for warehouses, supplier orders, inventory movements, and payments.
+The application is designed for local demonstration using fictional data. Its operational views are read-only and available according to the user's access and development configuration.
 
-Availability depends on the authenticated user's permissions and local development configuration. Purchasing and business data mutations are not enabled.
+## Highlights
 
-## Technology stack
+- **Company workspace:** dashboard statistics and recent activity, searchable marketplace, order records, and reports.
+- **Supplier workspace:** a dedicated dashboard, shared marketplace, and catalog insights.
+- **Data visualization:** eight interactive Chart.js visualizations across the company reports and supplier catalog, with tables and loading, empty, and error states.
+- **Security:** username-based login with bcrypt verification and JWT sessions, organization-aware Angular route guards, and backend authorization checks.
+- **Engineering:** typed Angular services, an HTTP interceptor that sends credentials only to the trusted backend, parameterized Oracle queries, and frontend and backend automated tests.
 
-| Layer | Technologies |
-| --- | --- |
-| Frontend | Angular, TypeScript, RxJS, Chart.js, ng2-charts |
-| Backend | Node.js, Express, REST APIs, node-oracledb |
-| Database | Oracle Database 19c |
-| Authentication | JWT, HttpOnly cookies, bcrypt |
+## Architecture
 
-## Architecture and data
+```text
+Angular / TypeScript
+  Components · services · route guards · HTTP interceptor
+                    |
+              REST API requests
+                    |
+Node.js / Express
+  Authentication · authorization · routes · controllers
+                    |
+              node-oracledb
+                    |
+          Oracle Database 19c
+```
 
-The Angular application calls Express REST APIs. Backend middleware verifies the session and applies access checks before controllers query Oracle Database through node-oracledb. The frontend provides separate company and supplier routes based on the user's verified organization association.
+The documented Oracle schema contains **15 tables**, covering companies, users and roles, products and images, warehouses, inventory movements, supplier orders, payments, invoices, production, recipes, and stock adjustments. Supplier organizations are represented by company records. See [AL_DATABASE_SCHEMA.md](AL_DATABASE_SCHEMA.md) for the schema reference.
 
-The documented Oracle schema covers companies, users and roles, products and images, warehouses and inventory movements, supplier orders, payments, production, recipes, and stock adjustments. Suppliers are represented by company records. Some records do not have a verified organization ownership relationship, so operational data cannot safely be filtered by company throughout the application. See [AL_DATABASE_SCHEMA.md](AL_DATABASE_SCHEMA.md) for the schema reference.
+## Reports and analytics
 
-## Authentication and authorization
+Seven company-report charts visualize warehouse capacity, order status and trends, inventory movement quantities and history, and recorded payments by method and status. A supplier catalog chart provides an eighth visualization. Operational reports use global data for authorized local development; they do not represent company-specific filtering or revenue.
 
-- Successful login establishes a short-lived signed JWT in an HttpOnly, SameSite cookie; the token is not returned in the JSON response.
-- bcrypt hashes are supported; legacy plain-text password verification remains temporarily available for existing accounts. Public signup is disabled.
-- Angular guards manage authenticated portal navigation. The backend independently verifies sessions, organization membership, and applicable permissions.
-- Marketplace reads require an eligible role and verified organization. Global operational reads are restricted to explicitly approved local-development users and are disabled by default; the development allowlist is inactive in production.
-- Logout clears the cookie but does not revoke a previously copied stateless JWT before it expires.
+## Authentication and access
+
+- Login creates a short-lived signed JWT in an HttpOnly, SameSite cookie. The token is not returned in the JSON response.
+- bcrypt password hashes and existing legacy plain-text passwords are currently supported. Public signup is disabled.
+- Angular guards manage session restoration and portal navigation. Express independently verifies the session, current organization association, and applicable permissions.
+- Marketplace reads require an eligible role and verified organization. Global operational reads require an explicitly approved local-development user; this allowlist is inactive in production.
+- Logout clears the cookie, but a copied stateless JWT remains valid until it expires.
 
 See [AL_PERMISSIONS.md](AL_PERMISSIONS.md) and [AL_RESOURCE_ACCESS.md](AL_RESOURCE_ACCESS.md) for permission and ownership details.
 
-## Reports and charts
-
-Four report tabs combine database records with seven Chart.js visualizations: warehouse capacity; orders by status and over time; inventory quantities by movement type and movement history; and recorded payment amounts by method and payment counts by status. The operational reports show global data for authorized local development, not company-specific results. Recorded payments are not presented as revenue.
-
 ## Local setup
 
-**Prerequisites:** Node.js and npm, a running Oracle Database, and an existing compatible schema and account. The repository documents the schema but does not provide a database export, seed data, or a complete schema installation script. Public registration is unavailable, and no demo credentials are included.
+**Prerequisites:** Node.js, npm, a running Oracle Database, and an existing compatible schema and user account. The repository documents the schema but does not include a database export, seed data, or a complete schema installation script. Public registration is unavailable, and no demo credentials are included.
 
-1. In `al-backend`, copy `.env.example` to `.env` and configure your own values. Keep `.env` private and generate a cryptographically random JWT secret of at least 32 characters.
-2. Install and start the backend:
-
-   ```sh
-   cd al-backend
-   npm install
-   node server.js
-   ```
-
-3. In a separate terminal, install and start the frontend:
-
-   ```sh
-   cd al-frontend/al-frontend-app
-   npm install
-   npm start
-   ```
-
-4. Open `http://localhost:4200` and sign in with an existing account in your local Oracle database. The API listens on port 3000.
-
-### Backend environment variables
-
-Use `.env.example` as the template; the following values are placeholders, not working credentials:
+Copy `al-backend/.env.example` to `al-backend/.env`, then supply your own values:
 
 ```dotenv
 ORACLE_DB_USER=YOUR_ORACLE_USER
@@ -76,23 +65,65 @@ JWT_SECRET=YOUR_RANDOM_SECRET_AT_LEAST_32_CHARACTERS
 DEV_ADMIN_USER_IDS=
 ```
 
-`DEV_ADMIN_USER_IDS` is an optional comma-separated list of explicitly approved user IDs for global operational reads in local development. Leave it empty to deny that access. Never commit real credentials, tokens, or the populated `.env` file.
+Generate a cryptographically random JWT secret of at least 32 characters and keep `.env` private. `DEV_ADMIN_USER_IDS` optionally lists explicitly approved user IDs for global operational reads in local development; leave it empty to deny that access.
 
-### Checks
+Start the backend:
 
-- Backend tests: `npm test` in `al-backend`.
-- Frontend tests: `npm test -- --watch=false --browsers=ChromeHeadless` in `al-frontend/al-frontend-app`.
-- Frontend production build: `npm run build` in `al-frontend/al-frontend-app`.
+```sh
+cd al-backend
+npm install
+node server.js
+```
+
+In a separate terminal, start the frontend:
+
+```sh
+cd al-frontend/al-frontend-app
+npm install
+npm start
+```
+
+Open [http://localhost:4200](http://localhost:4200) and sign in using an existing local Oracle account. The backend listens on port 3000.
+
+## Tests and build
+
+```sh
+# Backend tests, from al-backend
+npm test
+
+# Frontend tests, from al-frontend/al-frontend-app
+npm test -- --watch=false --browsers=ChromeHeadless
+
+# Frontend production build, from al-frontend/al-frontend-app
+npm run build
+```
 
 ## Screenshots
 
-Screenshots can be added here to showcase the landing page, company and supplier portals, marketplace, and reports.
+### Landing page
 
-## Current limitations and future work
+![AL landing page](screenshots/landing-page.png)
 
-- Purchasing, public registration, and full CRUD are unfinished; business mutations remain disabled.
-- Most operational records lack verified ownership relationships. Company-specific operational filtering and supplier-order ownership require further design; the shared marketplace also needs production publication rules.
-- The local development allowlist is a temporary demonstration policy, not a production authorization model.
-- Future work includes migrating legacy passwords to bcrypt, completing ownership-aware permissions and mutation safeguards, and adding account management and production deployment hardening.
+### Sign in
 
-This project is intended as a local portfolio demonstration. A separate security and data-ownership review is needed before any production use.
+![AL sign-in page](screenshots/login.PNG)
+
+### Orders
+
+![Company orders](screenshots/orders.PNG)
+
+### Supplier orders report
+
+![Supplier orders report and charts](screenshots/supplier%20reports.PNG)
+
+### Payments report
+
+![Payments report and charts](screenshots/payment%20records.PNG)
+
+## Future improvements
+
+- Complete purchasing, registration, and full CRUD; business mutations are currently disabled.
+- Establish verified ownership relationships and company-specific operational filtering, including supplier-order ownership and marketplace publication rules.
+- Migrate legacy plain-text passwords to bcrypt and complete production security and authorization hardening.
+
+AL is a local portfolio prototype, not a production-ready multi-tenant system. A separate security and data-ownership review is required before production use.
