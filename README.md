@@ -19,6 +19,28 @@ The application is designed for local demonstration using fictional data. Its op
 - **Security:** username-based login with bcrypt verification and JWT sessions, organization-aware Angular route guards, and backend authorization checks.
 - **Engineering:** typed Angular services, an HTTP interceptor that sends credentials only to the trusted backend, parameterized Oracle queries, and frontend and backend automated tests.
 
+## Screenshots
+
+### Landing page
+
+![AL landing page](screenshots/landing-page.png)
+
+### Sign in
+
+![AL sign-in page](screenshots/login.PNG)
+
+### Orders
+
+![Company orders](screenshots/orders.PNG)
+
+### Supplier orders report
+
+![Supplier orders report and charts](screenshots/supplier%20reports.PNG)
+
+### Payments report
+
+![Payments report and charts](screenshots/payment%20records.PNG)
+
 ## Architecture
 
 ```text
@@ -51,74 +73,9 @@ Seven company-report charts visualize warehouse capacity, order status and trend
 
 See [AL_PERMISSIONS.md](AL_PERMISSIONS.md) and [AL_RESOURCE_ACCESS.md](AL_RESOURCE_ACCESS.md) for permission and ownership details.
 
-## Local setup
+## Project Availability
 
-**Prerequisites:** Node.js, npm, a running Oracle Database, and an existing compatible schema and user account. The repository documents the schema but does not include a database export, seed data, or a complete schema installation script. Public registration is unavailable, and no demo credentials are included.
-
-Copy `al-backend/.env.example` to `al-backend/.env`, then supply your own values:
-
-```dotenv
-ORACLE_DB_USER=YOUR_ORACLE_USER
-ORACLE_DB_PASSWORD=YOUR_ORACLE_PASSWORD
-ORACLE_CONNECT_STRING=YOUR_ORACLE_CONNECT_STRING
-JWT_SECRET=YOUR_RANDOM_SECRET_AT_LEAST_32_CHARACTERS
-DEV_ADMIN_USER_IDS=
-```
-
-Generate a cryptographically random JWT secret of at least 32 characters and keep `.env` private. `DEV_ADMIN_USER_IDS` optionally lists explicitly approved user IDs for global operational reads in local development; leave it empty to deny that access.
-
-Start the backend:
-
-```sh
-cd al-backend
-npm install
-node server.js
-```
-
-In a separate terminal, start the frontend:
-
-```sh
-cd al-frontend/al-frontend-app
-npm install
-npm start
-```
-
-Open [http://localhost:4200](http://localhost:4200) and sign in using an existing local Oracle account. The backend listens on port 3000.
-
-## Tests and build
-
-```sh
-# Backend tests, from al-backend
-npm test
-
-# Frontend tests, from al-frontend/al-frontend-app
-npm test -- --watch=false --browsers=ChromeHeadless
-
-# Frontend production build, from al-frontend/al-frontend-app
-npm run build
-```
-
-## Screenshots
-
-### Landing page
-
-![AL landing page](screenshots/landing-page.png)
-
-### Sign in
-
-![AL sign-in page](screenshots/login.PNG)
-
-### Orders
-
-![Company orders](screenshots/orders.PNG)
-
-### Supplier orders report
-
-![Supplier orders report and charts](screenshots/supplier%20reports.PNG)
-
-### Payments report
-
-![Payments report and charts](screenshots/payment%20records.PNG)
+AL runs locally and requires an existing compatible Oracle database and user account. The repository documents the schema but does not include a database export or seed data.
 
 ## Future improvements
 
